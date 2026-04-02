@@ -1,0 +1,10 @@
+{
+  "name": "mjc/vgcollection",
+  "autoload": {
+    "psr-4": {"App\\": "app/"},
+    "classmap": ["app/models"]
+  },
+  "require": {
+    "ext-mysqli": "*"
+  }
+}

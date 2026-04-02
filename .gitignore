@@ -1,0 +1,13 @@
+
+#-------------------------
+# Composer
+#-------------------------
+vendor/
+
+#-------------------------
+# IDE / Development Files
+#-------------------------
+
+# Jetbrains editors (PHPStorm, etc)
+.idea/
+*.iml
