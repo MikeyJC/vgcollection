@@ -4,7 +4,7 @@ namespace App\models;
 
 use App\config\Database;
 
-class Base
+class BaseModel
 {
     protected $db;
     protected $table;

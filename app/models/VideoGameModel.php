@@ -2,7 +2,7 @@
 
 namespace App\models;
 
-class VideoGame extends Base
+class VideoGameModel extends BaseModel
 {
 
     public function __construct()

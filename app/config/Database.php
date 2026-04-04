@@ -4,7 +4,7 @@ namespace App\config;
 
 class Database
 {
-    protected $db;
+    public $db;
     public function __construct()
     {
         $this->db = $this->connect();
@@ -22,7 +22,6 @@ class Database
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
-        echo "Connected successfully";
 
         return $conn;
     }

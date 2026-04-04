@@ -1,13 +1,13 @@
 <?php
 
-use App\models\User;
-use App\models\VideoGame;
+use App\models\UserModel;
+use App\models\VideoGameModel;
 
 require './app/bootstrap.php';
 
-$user = new User('admin', 'admin');
+$user = new UserModel('admin', 'admin');
 
 echo $user->getUsername();
 
-$videoGame = new VideoGame();
+$videoGame = new VideoGameModel();
 echo 'Test2';
