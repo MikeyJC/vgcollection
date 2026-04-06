@@ -20,7 +20,26 @@ class VideoGameModel extends BaseModel
         $sql = "SELECT vg.id, vg.name, vg.platform, vg.release_date, d.name AS 'Developer', p.name AS 'Publisher' FROM videogames AS vg
          LEFT JOIN developers AS d ON vg.developer_id = d.id
          LEFT JOIN publishers AS p ON vg.publisher_id = p.id
-         ORDER BY id ASC LIMIT ?".$offset;
+         ORDER BY id LIMIT ?" .$offset;
         return $this->db->select($sql, ["i", $limit]);
+    }
+
+    public function createVideoGame($data){
+        $fields = [];
+        $values = [];
+        foreach ($data as $key => $value) {
+            $fields[] = $key;
+            if ($key != 'publisher_id' && $key != 'developer_id') {
+                $values[] = "'{$value}'";
+            } else {
+                $values[] = $value;
+            }
+        }
+        $sql = "INSERT INTO videogames(".implode(',', $fields).") VALUES (".implode(',', $values).")";
+        $result = $this->db->insert($sql);
+        $res = [];
+        if ($result) {
+            return ($res['response'] = 'Successfully created new entry!');
+        }
     }
 }

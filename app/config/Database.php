@@ -31,7 +31,17 @@ class Database
         } catch(Exception $e) {
             throw New Exception($e->getMessage());
         }
-        return false;
+    }
+
+    public function insert($query = "", $params = [])
+    {
+        try {
+            $stmt = $this->executeStatement($query, $params);
+            $stmt->close();
+            return true;
+        } catch(Exception $e) {
+            throw New Exception($e->getMessage());
+        }
     }
 
     private function executeStatement($query = "" , $params = [])
@@ -41,7 +51,7 @@ class Database
             if($stmt === false) {
                 throw New Exception("Unable to do prepared statement: ".$query);
             }
-            if( $params ) {
+            if($params) {
                 $stmt->bind_param($params[0], $params[1]);
             }
             $stmt->execute();

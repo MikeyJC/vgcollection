@@ -8,7 +8,7 @@ $conn = new Database();
 
 $sql = "SELECT * FROM users";
 
-$result = $conn->db->query($sql);
+$result = $conn->conn->query($sql);
 
 $data = [];
 
