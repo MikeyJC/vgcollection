@@ -5,6 +5,7 @@
     "classmap": ["app/models"]
   },
   "require": {
-    "ext-mysqli": "*"
+    "ext-mysqli": "*",
+    "ext-xdebug": "*"
   }
 }

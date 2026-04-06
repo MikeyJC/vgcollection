@@ -12,6 +12,5 @@ class BaseModel
     public function __construct()
     {
         $this->db = new Database();
-        echo 'test1';
     }
 }

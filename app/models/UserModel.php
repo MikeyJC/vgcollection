@@ -2,15 +2,23 @@
 
 namespace App\models;
 
-class UserModel
+class UserModel extends BaseModel
 {
-    private $username;
-    private $password;
+    protected $username;
 
-    public function __construct($username, $password)
+    public function __construct()
     {
-        $this->username = $username;
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        parent::__construct();
+        $this->table = 'users';
+    }
+
+    public function getUsers($limit = 10, $offset = 0)
+    {
+        $offset = "";
+        if ($offset > 0) {
+            $offset = " OFFSET ".intval($offset);
+        }
+        return $this->db->select("SELECT * FROM users ORDER BY id ASC LIMIT ?".$offset, ["i", $limit]);
     }
 
     public function getUsername()

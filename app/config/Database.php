@@ -2,27 +2,52 @@
 
 namespace App\config;
 
+use Exception;
+use mysqli;
+
 class Database
 {
-    public $db;
+    public ?mysqli $conn;
     public function __construct()
     {
-        $this->db = $this->connect();
+        try {
+            $this->conn = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE_NAME);
+
+            if (mysqli_connect_errno()) {
+                throw new Exception("Could not connect to database.");
+            }
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
-    public static function connect()
+    public function select($query = "", $params = [])
     {
-        $servername = "localhost";
-        $username = "root";
-        $password = "root";
-        $dbname = "vgcollection_db";
-
-        $conn = mysqli_connect($servername, $username, $password, $dbname);
-        // Check connection
-        if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
+        try {
+            $stmt = $this->executeStatement($query, $params);
+            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+            return $result;
+        } catch(Exception $e) {
+            throw New Exception($e->getMessage());
         }
+        return false;
+    }
 
-        return $conn;
+    private function executeStatement($query = "" , $params = [])
+    {
+        try {
+            $stmt = $this->conn->prepare($query);
+            if($stmt === false) {
+                throw New Exception("Unable to do prepared statement: ".$query);
+            }
+            if( $params ) {
+                $stmt->bind_param($params[0], $params[1]);
+            }
+            $stmt->execute();
+            return $stmt;
+        } catch(Exception $e) {
+            throw New Exception($e->getMessage());
+        }
     }
 }
