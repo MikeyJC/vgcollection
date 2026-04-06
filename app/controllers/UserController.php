@@ -7,10 +7,10 @@ use Error;
 
 class UserController extends BaseController
 {
-    public function listAction($model = null, $method = null): void
+    public function listAction($model = null, $call = null): void
     {
         $model = new UserModel();
-        $method = 'getUsers';
-        parent::listAction($model, $method);
+        $call = 'getUsers';
+        parent::listAction($model, $call);
     }
 }

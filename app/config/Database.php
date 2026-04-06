@@ -44,6 +44,28 @@ class Database
         }
     }
 
+    public function delete($query = "", $params = [])
+    {
+        try {
+            $stmt = $this->executeStatement($query, $params);
+            $stmt->close();
+            return true;
+        } catch(Exception $e) {
+            throw New Exception($e->getMessage());
+        }
+    }
+
+    public function update($query = "", $params = [])
+    {
+        try {
+            $stmt = $this->executeStatement($query, $params);
+            $stmt->close();
+            return true;
+        } catch(Exception $e) {
+            throw New Exception($e->getMessage());
+        }
+    }
+
     private function executeStatement($query = "" , $params = [])
     {
         try {

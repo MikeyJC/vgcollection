@@ -35,10 +35,10 @@ class BaseController
         exit;
     }
 
-    public function listAction($model = null, $method = null): void
+    public function listAction($model = null, $call = null): void
     {
-        if (is_null($model) || is_null($method)) {
-            $strErrorDesc = 'Missing Model/Method';
+        if (is_null($model) || is_null($call)) {
+            $strErrorDesc = 'Missing Model/Call';
             $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
             $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
@@ -58,7 +58,7 @@ class BaseController
                 if (isset($arrQueryStringParams['offset']) && $arrQueryStringParams['offset']) {
                     $offset = $arrQueryStringParams['offset'];
                 }
-                $arrVideoGames = $model->$method($intLimit, $offset);
+                $arrVideoGames = $model->$call($intLimit, $offset);
                 $responseData = json_encode($arrVideoGames);
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage().'Something went wrong! Please contact support.';
@@ -81,10 +81,10 @@ class BaseController
         }
     }
 
-    public function createAction($model = null, $method = null): void
+    public function createAction($model = null, $call = null): void
     {
-        if (is_null($model) || is_null($method)) {
-            $strErrorDesc = 'Missing Model/Method';
+        if (is_null($model) || is_null($call)) {
+            $strErrorDesc = 'Missing Model/Call';
             $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
             $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
@@ -102,10 +102,110 @@ class BaseController
         }
         $strErrorDesc = '';
         $requestMethod = $_SERVER["REQUEST_METHOD"];
-        $arrQueryStringParams = $this->getQueryStringParams();
         if (strtoupper($requestMethod) == 'POST') {
             try {
-                $arrVideoGames = $model->$method($input);
+                $arrVideoGames = $model->$call($input);
+                $responseData = json_encode($arrVideoGames);
+            } catch (Error $e) {
+                $strErrorDesc = $e->getMessage().'Something went wrong! Please contact support.';
+                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            }
+        } else {
+            $strErrorDesc = 'Method not supported';
+            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+        }
+        // send output
+        if (!$strErrorDesc) {
+            $this->sendOutput(
+                $responseData,
+                array('Content-Type: application/json', 'HTTP/1.1 200 OK')
+            );
+        } else {
+            $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
+                array('Content-Type: application/json', $strErrorHeader)
+            );
+        }
+    }
+
+    public function updateAction($model = null, $call = null): void
+    {
+        if (is_null($model) || is_null($call)) {
+            $strErrorDesc = 'Missing Model/Call';
+            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+            $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
+                array('Content-Type: application/json', $strErrorHeader)
+            );
+            return;
+        }
+        $input = json_decode(file_get_contents('php://input'), true);
+        if (is_null($input)) {
+            $strErrorDesc = 'Missing Data';
+            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+            $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
+                array('Content-Type: application/json', $strErrorHeader)
+            );
+            return;
+        }
+        $id = $_GET['id'] ?? null;
+        if (is_null($id)) {
+            $strErrorDesc = 'Missing ID';
+            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+            $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
+                array('Content-Type: application/json', $strErrorHeader)
+            );
+            return;
+        }
+        $strErrorDesc = '';
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        if (strtoupper($requestMethod) == 'PUT') {
+            try {
+                $arrVideoGames = $model->$call($input, $id);
+                $responseData = json_encode($arrVideoGames);
+            } catch (Error $e) {
+                $strErrorDesc = $e->getMessage().'Something went wrong! Please contact support.';
+                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            }
+        } else {
+            $strErrorDesc = 'Method not supported';
+            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+        }
+        // send output
+        if (!$strErrorDesc) {
+            $this->sendOutput(
+                $responseData,
+                array('Content-Type: application/json', 'HTTP/1.1 200 OK')
+            );
+        } else {
+            $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
+                array('Content-Type: application/json', $strErrorHeader)
+            );
+        }
+    }
+
+    public function deleteAction($model = null, $call = null): void
+    {
+        if (is_null($model) || is_null($call)) {
+            $strErrorDesc = 'Missing Model/Call';
+            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+            $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
+                array('Content-Type: application/json', $strErrorHeader)
+            );
+            return;
+        }
+        $id = $_GET['id'] ?? null;
+        if (is_null($id)) {
+            $strErrorDesc = 'Missing ID';
+            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+            $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
+                array('Content-Type: application/json', $strErrorHeader)
+            );
+            return;
+        }
+        $strErrorDesc = '';
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        if (strtoupper($requestMethod) == 'DELETE') {
+            try {
+                $arrVideoGames = $model->$call($id);
                 $responseData = json_encode($arrVideoGames);
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage().'Something went wrong! Please contact support.';

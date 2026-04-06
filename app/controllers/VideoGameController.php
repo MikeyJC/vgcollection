@@ -7,17 +7,31 @@ use Error;
 
 class VideoGameController extends BaseController
 {
-    public function listAction($model = null, $method = null): void
+    public function listAction($model = null, $call = null): void
     {
         $model = new VideoGameModel();
-        $method = 'getVideoGames';
-        parent::listAction($model, $method);
+        $call = 'getVideoGames';
+        parent::listAction($model, $call);
     }
 
-    public function createAction($model = null, $method = null): void
+    public function createAction($model = null, $call = null): void
     {
         $model = new VideoGameModel();
-        $method = 'createVideoGame';
-        parent::createAction($model, $method);
+        $call = 'createVideoGame';
+        parent::createAction($model, $call);
+    }
+
+    public function updateAction($model = null, $call = null): void
+    {
+        $model = new VideoGameModel();
+        $call = 'updateVideoGame';
+        parent::updateAction($model, $call);
+    }
+
+    public function deleteAction($model = null, $call = null): void
+    {
+        $model = new VideoGameModel();
+        $call = 'deleteVideoGame';
+        parent::deleteAction($model, $call);
     }
 }

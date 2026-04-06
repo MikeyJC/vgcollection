@@ -40,6 +40,40 @@ class VideoGameModel extends BaseModel
         $res = [];
         if ($result) {
             return ($res['response'] = 'Successfully created new entry!');
+        } else {
+            return ($res['response'] = 'Failed to create new entry!');
+        }
+    }
+
+    public function updateVideoGame($data, $id){
+        $fields = [];
+        $values = [];
+        foreach ($data as $key => $value) {
+            if ($key != 'publisher_id' && $key != 'developer_id') {
+                $values[] = "$key = '$value'";
+            } else {
+                $values[] = "$key = $value";
+            }
+        }
+        $sql = "UPDATE videogames SET ".implode(", ", $values)." WHERE id = ?";
+        $result = $this->db->update($sql, $id);
+        $res = [];
+        if ($result) {
+            return ($res['response'] = 'Successfully updated entry!');
+        } else {
+            return ($res['response'] = 'Failed to update entry!');
+        }
+    }
+
+    public function deleteVideoGame($id)
+    {
+        $sql = "DELETE FROM videogames WHERE id = ?";
+        $result = $this->db->delete($sql, $id);
+        $res = [];
+        if ($result) {
+            return ($res['response'] = 'Successfully deleted entry!');
+        } else {
+            return ($res['response'] = 'Failed to delete entry!');
         }
     }
 }
