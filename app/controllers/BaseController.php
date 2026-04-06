@@ -94,7 +94,7 @@ class BaseController
         $input = json_decode(file_get_contents('php://input'), true);
         if (is_null($input)) {
             $strErrorDesc = 'Missing Data';
-            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+            $strErrorHeader = 'HTTP/1.1 400 Bad Request';
             $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
             );
@@ -140,7 +140,7 @@ class BaseController
         $input = json_decode(file_get_contents('php://input'), true);
         if (is_null($input)) {
             $strErrorDesc = 'Missing Data';
-            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+            $strErrorHeader = 'HTTP/1.1 400 Bad Request';
             $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
             );
@@ -149,7 +149,7 @@ class BaseController
         $id = $_GET['id'] ?? null;
         if (is_null($id)) {
             $strErrorDesc = 'Missing ID';
-            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+            $strErrorHeader = 'HTTP/1.1 400 Bad Request';
             $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
             );
@@ -195,7 +195,7 @@ class BaseController
         $id = $_GET['id'] ?? null;
         if (is_null($id)) {
             $strErrorDesc = 'Missing ID';
-            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+            $strErrorHeader = 'HTTP/1.1 400 Bad Request';
             $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
                 array('Content-Type: application/json', $strErrorHeader)
             );
