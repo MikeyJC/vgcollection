@@ -1,0 +1,21 @@
+body {
+    background-color: #c7efe5;
+}
+
+h1 {
+    color: midnightblue;
+    margin-left: 5%;
+}
+
+p {
+    margin-left: 10%;
+}
+
+button {
+    -webkit-appearance: button-bevel;
+}
+
+#content {
+    background-color: darkslategray;
+    color: azure;
+}
