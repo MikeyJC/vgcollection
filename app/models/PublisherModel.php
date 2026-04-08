@@ -11,17 +11,19 @@ class PublisherModel extends BaseModel
         $this->table = 'publishers';
     }
 
-    public function getPublishers($limit = 10, $offset = 0)
+    public function getPublishers($limit = 10, $offset = 0, $orderBy = 'id', $dir = 'ASC')
     {
-        $params = "";
+        if ($dir !== 'ASC' && $dir !== 'DESC') {
+            $dir = 'ASC';
+        }
+        $params = "ORDER BY $orderBy $dir";
         if ($limit > 0) {
-            $params = "LIMIT {$limit} ";
+            $params .= " LIMIT {$limit} ";
             if ($offset > 0) {
                 $params .= " OFFSET ".intval($offset);
             }
         }
-        $sql = "SELECT * FROM publishers AS d
-         ORDER BY id " .$params;
+        $sql = "SELECT * FROM publishers AS d " .$params;
         return $this->db->select($sql);
     }
 

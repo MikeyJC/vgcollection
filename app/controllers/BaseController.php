@@ -53,13 +53,21 @@ class BaseController
             try {
                 $intLimit = 10;
                 $offset = 0;
+                $order = 'id';
+                $dir = 'ASC';
                 if (isset($arrQueryStringParams['limit']) && $arrQueryStringParams['limit']) {
                     $intLimit = $arrQueryStringParams['limit'];
                 }
                 if (isset($arrQueryStringParams['offset']) && $arrQueryStringParams['offset']) {
                     $offset = $arrQueryStringParams['offset'];
                 }
-                $arrVideoGames = $model->$call($intLimit, $offset);
+                if (isset($arrQueryStringParams['order']) && $arrQueryStringParams['order']) {
+                    $order = $arrQueryStringParams['order'];
+                }
+                if (isset($arrQueryStringParams['dir']) && $arrQueryStringParams['dir']) {
+                    $dir = $arrQueryStringParams['dir'];
+                }
+                $arrVideoGames = $model->$call($intLimit, $offset, $order, $dir);
                 $responseData = json_encode($arrVideoGames);
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage().' Something went wrong! Please contact support.';

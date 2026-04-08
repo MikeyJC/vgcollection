@@ -11,19 +11,21 @@ class VideoGameModel extends BaseModel
         $this->table = 'videogames';
     }
 
-    public function getVideoGames($limit = 10, $offset = 0)
+    public function getVideoGames($limit = 10, $offset = 0, $orderBy = 'id', $dir = 'ASC')
     {
-        $params = "";
+        if ($dir !== 'ASC' && $dir !== 'DESC') {
+            $dir = 'ASC';
+        }
+        $params = "ORDER BY $orderBy $dir";
         if ($limit > 0) {
-            $params = "LIMIT {$limit} ";
+            $params .= " LIMIT {$limit} ";
             if ($offset > 0) {
                 $params .= " OFFSET ".intval($offset);
             }
         }
         $sql = "SELECT vg.id, vg.name, vg.platform, vg.release_date, d.name AS 'Developer', p.name AS 'Publisher' FROM videogames AS vg
          LEFT JOIN developers AS d ON vg.developer_id = d.id
-         LEFT JOIN publishers AS p ON vg.publisher_id = p.id
-         ORDER BY id " .$params;
+         LEFT JOIN publishers AS p ON vg.publisher_id = p.id " .$params;
         return $this->db->select($sql);
     }
 
