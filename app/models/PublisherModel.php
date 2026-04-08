@@ -30,7 +30,8 @@ class PublisherModel extends BaseModel
         $values = [];
         foreach ($data as $key => $value) {
             $fields[] = $key;
-            $values[] = $value;
+            $value = mysqli_real_escape_string($this->db->conn, $value);
+            $values[] = "'{$value}'";;
         }
         $sql = "INSERT INTO publishers(".implode(',', $fields).") VALUES (".implode(',', $values).")";
         $result = $this->db->insert($sql);
@@ -45,7 +46,8 @@ class PublisherModel extends BaseModel
     public function updatePublisher($data, $id){
         $values = [];
         foreach ($data as $key => $value) {
-            $values[] = "$key = $value";
+            $value = mysqli_real_escape_string($this->db->conn, $value);
+            $values[] = "$key = '$value'";
         }
         $sql = "UPDATE publishers SET ".implode(", ", $values)." WHERE id = ?";
         $result = $this->db->update($sql, $id);

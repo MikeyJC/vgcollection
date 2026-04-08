@@ -15,7 +15,7 @@ class DeveloperModel extends BaseModel
     {
         $params = "";
         if ($limit > 0) {
-            $params = "LIMIT {$limit} ";
+            $params = "LIMIT $limit ";
             if ($offset > 0) {
                 $params .= " OFFSET ".intval($offset);
             }
@@ -30,7 +30,8 @@ class DeveloperModel extends BaseModel
         $values = [];
         foreach ($data as $key => $value) {
             $fields[] = $key;
-            $values[] = $value;
+            $value = mysqli_real_escape_string($this->db->conn, $value);
+            $values[] = "'$value'";
         }
         $sql = "INSERT INTO developers(".implode(',', $fields).") VALUES (".implode(',', $values).")";
         $result = $this->db->insert($sql);
@@ -45,7 +46,8 @@ class DeveloperModel extends BaseModel
     public function updateDeveloper($data, $id){
         $values = [];
         foreach ($data as $key => $value) {
-            $values[] = "$key = $value";
+            $value = mysqli_real_escape_string($this->db->conn, $value);
+            $values[] = "$key = '$value'";
         }
         $sql = "UPDATE developers SET ".implode(", ", $values)." WHERE id = ?";
         $result = $this->db->update($sql, $id);

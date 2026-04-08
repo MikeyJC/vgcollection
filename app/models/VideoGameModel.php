@@ -33,7 +33,8 @@ class VideoGameModel extends BaseModel
         foreach ($data as $key => $value) {
             $fields[] = $key;
             if ($key != 'publisher_id' && $key != 'developer_id') {
-                $values[] = "'{$value}'";
+                $value = mysqli_real_escape_string($this->db->conn, $value);
+                $values[] = "'$value'";
             } else {
                 $values[] = $value;
             }
@@ -52,6 +53,7 @@ class VideoGameModel extends BaseModel
         $values = [];
         foreach ($data as $key => $value) {
             if ($key != 'publisher_id' && $key != 'developer_id') {
+                $value = mysqli_real_escape_string($this->db->conn, $value);
                 $values[] = "$key = '$value'";
             } else {
                 $values[] = "$key = $value";
