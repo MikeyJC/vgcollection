@@ -1,5 +1,7 @@
 <?php
 
+use App\controllers\DeveloperController;
+use App\controllers\PublisherController;
 use App\controllers\UserController;
 use App\controllers\VideoGameController;
 
@@ -15,9 +17,9 @@ $requestToken = null;
 if (isset($_SERVER["HTTP_AUTHORIZATION"])) {
     $requestToken = $_SERVER["HTTP_AUTHORIZATION"];
 }
-$authorizedToken = ['Bearer testtoken' => ''];
+$authorizedTokens = AUTH_TOKENS;
 $requestMethod = $_SERVER["REQUEST_METHOD"];
-if (($requestMethod == 'POST' || $requestMethod == 'PUT' || $requestMethod == 'DELETE') && !isset($authorizedToken[$requestToken])) {
+if (($requestMethod == 'POST' || $requestMethod == 'PUT' || $requestMethod == 'DELETE') && !isset($authorizedTokens[$requestToken])) {
     header("HTTP/1.1 401 Unauthorized");
     exit();
 }
@@ -28,6 +30,12 @@ switch ($uri[5]) {
         break;
     case 'videogames':
         $objController = new VideoGameController();
+        break;
+    case 'developers':
+        $objController = new DeveloperController();
+        break;
+    case 'publishers':
+        $objController = new PublisherController();
         break;
     default:
         header("HTTP/1.1 404 Not Found");

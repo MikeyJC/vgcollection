@@ -8,7 +8,7 @@
     <script>
         function loadContent() {
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "api/v1/index.php/videogames/list", true);
+            xhr.open("GET", "api/v1/index.php/videogames/list?limit=0", true);
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     document.getElementById("content").innerHTML = null;

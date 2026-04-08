@@ -2,16 +2,16 @@
 
 namespace App\models;
 
-class VideoGameModel extends BaseModel
+class PublisherModel extends BaseModel
 {
 
     public function __construct()
     {
         parent::__construct();
-        $this->table = 'videogames';
+        $this->table = 'publishers';
     }
 
-    public function getVideoGames($limit = 10, $offset = 0)
+    public function getPublishers($limit = 10, $offset = 0)
     {
         $params = "";
         if ($limit > 0) {
@@ -20,25 +20,19 @@ class VideoGameModel extends BaseModel
                 $params .= " OFFSET ".intval($offset);
             }
         }
-        $sql = "SELECT vg.id, vg.name, vg.platform, vg.release_date, d.name AS 'Developer', p.name AS 'Publisher' FROM videogames AS vg
-         LEFT JOIN developers AS d ON vg.developer_id = d.id
-         LEFT JOIN publishers AS p ON vg.publisher_id = p.id
+        $sql = "SELECT * FROM publishers AS d
          ORDER BY id " .$params;
         return $this->db->select($sql);
     }
 
-    public function createVideoGame($data){
+    public function createPublisher($data){
         $fields = [];
         $values = [];
         foreach ($data as $key => $value) {
             $fields[] = $key;
-            if ($key != 'publisher_id' && $key != 'developer_id') {
-                $values[] = "'{$value}'";
-            } else {
-                $values[] = $value;
-            }
+            $values[] = $value;
         }
-        $sql = "INSERT INTO videogames(".implode(',', $fields).") VALUES (".implode(',', $values).")";
+        $sql = "INSERT INTO publishers(".implode(',', $fields).") VALUES (".implode(',', $values).")";
         $result = $this->db->insert($sql);
         $res = [];
         if ($result) {
@@ -48,17 +42,13 @@ class VideoGameModel extends BaseModel
         }
     }
 
-    public function updateVideoGame($data, $id){
+    public function updatePublisher($data, $id){
         $values = [];
         foreach ($data as $key => $value) {
-            if ($key != 'publisher_id' && $key != 'developer_id') {
-                $values[] = "$key = '$value'";
-            } else {
-                $values[] = "$key = $value";
-            }
+            $values[] = "$key = $value";
         }
-        $sql = "UPDATE videogames SET ".implode(", ", $values)." WHERE id = ?";
-        $result = $this->db->update($sql, ["i", $id]);
+        $sql = "UPDATE publishers SET ".implode(", ", $values)." WHERE id = ?";
+        $result = $this->db->update($sql, $id);
         $res = [];
         if ($result) {
             return ($res['response'] = 'Successfully updated entry!');
@@ -67,10 +57,10 @@ class VideoGameModel extends BaseModel
         }
     }
 
-    public function deleteVideoGame($id)
+    public function deletePublisher($id)
     {
-        $sql = "DELETE FROM videogames WHERE id = ?";
-        $result = $this->db->delete($sql, ["i", $id]);
+        $sql = "DELETE FROM publishers WHERE id = ?";
+        $result = $this->db->delete($sql, $id);
         $res = [];
         if ($result) {
             return ($res['response'] = 'Successfully deleted entry!');

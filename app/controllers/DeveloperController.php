@@ -2,35 +2,35 @@
 
 namespace App\controllers;
 
-use App\models\VideoGameModel;
+use App\models\DeveloperModel;
 
-class VideoGameController extends BaseController
+class DeveloperController extends BaseController
 {
     public function listAction($model = null, $call = null): void
     {
-        $model = new VideoGameModel();
-        $call = 'getVideoGames';
+        $model = new DeveloperModel();
+        $call = 'getDevelopers';
         parent::listAction($model, $call);
     }
 
     public function createAction($model = null, $call = null): void
     {
-        $model = new VideoGameModel();
-        $call = 'createVideoGame';
+        $model = new DeveloperModel();
+        $call = 'createDeveloper';
         parent::createAction($model, $call);
     }
 
     public function updateAction($model = null, $call = null): void
     {
-        $model = new VideoGameModel();
-        $call = 'updateVideoGame';
+        $model = new DeveloperModel();
+        $call = 'updateDeveloper';
         parent::updateAction($model, $call);
     }
 
     public function deleteAction($model = null, $call = null): void
     {
-        $model = new VideoGameModel();
-        $call = 'deleteVideoGame';
+        $model = new DeveloperModel();
+        $call = 'deleteDeveloper';
         parent::deleteAction($model, $call);
     }
 }

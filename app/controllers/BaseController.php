@@ -61,7 +61,7 @@ class BaseController
                 $arrVideoGames = $model->$call($intLimit, $offset);
                 $responseData = json_encode($arrVideoGames);
             } catch (Error $e) {
-                $strErrorDesc = $e->getMessage().'Something went wrong! Please contact support.';
+                $strErrorDesc = $e->getMessage().' Something went wrong! Please contact support.';
                 $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
             }
         } else {
@@ -107,7 +107,7 @@ class BaseController
                 $arrVideoGames = $model->$call($input);
                 $responseData = json_encode($arrVideoGames);
             } catch (Error $e) {
-                $strErrorDesc = $e->getMessage().'Something went wrong! Please contact support.';
+                $strErrorDesc = $e->getMessage().' Something went wrong! Please contact support.';
                 $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
             }
         } else {
@@ -146,7 +146,7 @@ class BaseController
             );
             return;
         }
-        $id = $_GET['id'] ?? null;
+        $id = $_REQUEST['id'] ?? null;
         if (is_null($id)) {
             $strErrorDesc = 'Missing ID';
             $strErrorHeader = 'HTTP/1.1 400 Bad Request';
@@ -162,7 +162,7 @@ class BaseController
                 $arrVideoGames = $model->$call($input, $id);
                 $responseData = json_encode($arrVideoGames);
             } catch (Error $e) {
-                $strErrorDesc = $e->getMessage().'Something went wrong! Please contact support.';
+                $strErrorDesc = $e->getMessage().' Something went wrong! Please contact support.';
                 $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
             }
         } else {
@@ -192,7 +192,7 @@ class BaseController
             );
             return;
         }
-        $id = $_GET['id'] ?? null;
+        $id = $_REQUEST['id'] ?? null;
         if (is_null($id)) {
             $strErrorDesc = 'Missing ID';
             $strErrorHeader = 'HTTP/1.1 400 Bad Request';
@@ -208,7 +208,7 @@ class BaseController
                 $arrVideoGames = $model->$call($id);
                 $responseData = json_encode($arrVideoGames);
             } catch (Error $e) {
-                $strErrorDesc = $e->getMessage().'Something went wrong! Please contact support.';
+                $strErrorDesc = $e->getMessage().' Something went wrong! Please contact support.';
                 $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
             }
         } else {

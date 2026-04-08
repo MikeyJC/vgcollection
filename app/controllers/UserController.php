@@ -3,7 +3,6 @@
 namespace App\controllers;
 
 use App\models\UserModel;
-use Error;
 
 class UserController extends BaseController
 {

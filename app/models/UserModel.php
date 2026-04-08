@@ -18,7 +18,7 @@ class UserModel extends BaseModel
         if ($offset > 0) {
             $offset = " OFFSET ".intval($offset);
         }
-        return $this->db->select("SELECT * FROM users ORDER BY id LIMIT ?" .$offset, ["i", $limit]);
+        return $this->db->select("SELECT username FROM users ORDER BY id LIMIT ?" .$offset, ["i", $limit]);
     }
 
     public function getUsername()

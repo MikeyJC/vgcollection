@@ -2,35 +2,35 @@
 
 namespace App\controllers;
 
-use App\models\VideoGameModel;
+use App\models\PublisherModel;
 
-class VideoGameController extends BaseController
+class PublisherController extends BaseController
 {
     public function listAction($model = null, $call = null): void
     {
-        $model = new VideoGameModel();
-        $call = 'getVideoGames';
+        $model = new PublisherModel();
+        $call = 'getPublishers';
         parent::listAction($model, $call);
     }
 
     public function createAction($model = null, $call = null): void
     {
-        $model = new VideoGameModel();
-        $call = 'createVideoGame';
+        $model = new PublisherModel();
+        $call = 'createPublisher';
         parent::createAction($model, $call);
     }
 
     public function updateAction($model = null, $call = null): void
     {
-        $model = new VideoGameModel();
-        $call = 'updateVideoGame';
+        $model = new PublisherModel();
+        $call = 'updatePublisher';
         parent::updateAction($model, $call);
     }
 
     public function deleteAction($model = null, $call = null): void
     {
-        $model = new VideoGameModel();
-        $call = 'deleteVideoGame';
+        $model = new PublisherModel();
+        $call = 'deletePublisher';
         parent::deleteAction($model, $call);
     }
 }
