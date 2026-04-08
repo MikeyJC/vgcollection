@@ -79,3 +79,10 @@ Updates an entry in the database.
 Deletes an entry from the database.
 - model : `videogames`, `developers`, `publishers`
 - id : ID of record
+
+
+## Current TODO
+- Frontend development, currently just returns full list.
+  - Include user login session (admin/admin)
+  - Creation/Update view
+  - Detail View
