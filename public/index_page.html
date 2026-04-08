@@ -11,7 +11,29 @@
             xhr.open("GET", "api/v1/index.php/videogames/list", true);
             xhr.onload = function () {
                 if (xhr.status === 200) {
-                    document.getElementById("content").innerHTML = xhr.responseText;
+                    document.getElementById("content").innerHTML = null;
+                    const tableGame = document.createElement("table");
+                    const header = document.createElement("tr");
+                    header.innerHTML =
+                        '<th>ID</th>' +
+                        '<th>Name</th>' +
+                        '<th>Platform</th>' +
+                        '<th>Release Date</th>' +
+                        '<th>Developer</th>' +
+                        '<th>Publisher</th>';
+                    tableGame.appendChild(header);
+                    const data = JSON.parse(xhr.responseText);
+                    for (let i = 0; i < data.length; i++) {
+                        const row = document.createElement('tr');
+                        row.innerHTML += '<td>'+data[i].id+'</td>';
+                        row.innerHTML += '<td>'+data[i].name+'</td>';
+                        row.innerHTML += '<td>'+data[i].platform+'</td>';
+                        row.innerHTML += '<td>'+data[i].release_date+'</td>';
+                        row.innerHTML += '<td>'+data[i].Developer+'</td>';
+                        row.innerHTML += '<td>'+data[i].Publisher+'</td>';
+                        tableGame.appendChild(row);
+                    }
+                    document.getElementById("content").appendChild(tableGame);
                 }
             };
             xhr.send();

@@ -1,5 +1,6 @@
 body {
     background-color: #c7efe5;
+    font-family: Calibri, sans-serif;
 }
 
 h1 {
@@ -16,6 +17,15 @@ button {
 }
 
 #content {
-    background-color: darkslategray;
+    background-color: lightslategray;
     color: azure;
+    width: max-content;
+}
+
+th {
+    background-color: darkgreen;
+}
+
+tr {
+    background-color: darkslategrey;
 }
